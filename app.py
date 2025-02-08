@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    return render_template("index.html")  # Carga el formulario HTML
+    return render_template("index.html")
 
 @app.route("/plot", methods=["GET"])
 def plot():
@@ -38,7 +38,8 @@ def plot():
         plt.figure(figsize=(10, 5))
         plt.plot(sx1, sy1, label=f'θ={theta1}')
         plt.plot(sx2, sy2, label=f'θ={theta2}')
-        plt.ylim(0, max(sy1.max(), sy2.max()) + 5)  # Ajuste dinámico del límite
+        plt.ylim(0, max(sy1.max(), sy2.max()) + 10)
+        plt.xlim(0, max(sx1.max(), sx2.max()) + 10)
         plt.legend()
 
         img = io.BytesIO()
@@ -46,7 +47,7 @@ def plot():
         img.seek(0)
 
         return send_file(img, mimetype='image/png')
-
+    
     except Exception as e:
         return f"Error: {e}"
 
